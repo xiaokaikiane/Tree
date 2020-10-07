@@ -85,6 +85,79 @@ public class Tree {
         int count=left+right+1;
         return count;
     }
+    //前序遍历非递归
+    public  static  ArrayList<Character> preOder(Node root){
+        ArrayList<Character> result=new ArrayList<>();
+        if(root==null){
+            System.out.println("空树");
+            return result;
+        }
+        Stack<Node> stack=new Stack<>();
+        Node temp=root;
+        stack.push(temp);
+        while(!stack.isEmpty()){
+            Node tmp=stack.pop();
+            result.add(tmp.val);
+            if(tmp.right!=null){
+                stack.push(tmp.right);
+            }
+            if(tmp.left!=null){
+                stack.push(tmp.left);
+            }
+        }
+        return result;
+    }
+    //中序遍历非递归
+    public  static ArrayList<Character> inOder(Node root){
+        ArrayList<Character> result=new ArrayList<>();
+        if(root==null){
+            System.out.println("空树");
+            return result;
+        }
+        Node temp=root;
+        Stack<Node> stack=new Stack<>();
+        while(temp!=null||!stack.isEmpty()){
+            while(temp!=null){
+                stack.push(temp);
+                temp=temp.left;
+            }
+            temp=stack.pop();
+            result.add(temp.val);
+            if(temp.right!=null){
+                temp=temp.right;
+            }else{
+                temp=null;
+            }
+        }
+        return result;
+    }
+    //后序遍历非递归
+    public static ArrayList<Character> postOder(Node root){
+        ArrayList<Character> result=new ArrayList<>();
+        if(root==null){
+            System.out.println("空树");
+            return result;
+        }
+        Stack<Node> stack=new Stack<>();
+        Node temp=root;
+        Node last=null;
+        while(temp!=null||!stack.isEmpty()){
+            while(temp!=null){
+                stack.push(temp);
+                temp=temp.left;
+            }
+            temp=stack.peek();
+            if(temp.right==null||temp.right==last){
+                temp= stack.pop();
+                result.add(temp.val);
+                last=temp;
+                temp=null;
+            }else {
+                temp=temp.right;
+            }
+        }
+        return result;
+    }
     //求二叉树叶子节点个数
     public static int leafcount=0;
     public static int calcLeafCount(Node root){
@@ -337,11 +410,11 @@ public class Tree {
 //    }
     public static void main(String[] args) {
         Node root = buildTree();
-        perodertraversal(root);
+        System.out.println(preOder(root));
         System.out.println("=======================");
-        inOrderTraversal(root);
+        System.out.println(inOder(root));
         System.out.println("=======================");
-        postOrderTraversal(root);
+        System.out.println(postOder(root));
         System.out.println("=======================");
     }
 }
